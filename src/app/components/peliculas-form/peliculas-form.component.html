@@ -1,0 +1,70 @@
+<h2 class="mb-5">Alta de películas</h2>
+<form [formGroup]="peliculaForm" (submit)="guardarPelicula()">
+
+  <div class="mb-3 w-75">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" class="form-control" [ngClass]="validarInput('nombre') ? 'is-invalid':''" id="nombre" formControlName="nombre">
+
+    <span class="help-block text-danger" *ngIf="validarInput('nombre')">
+      <span *ngIf="peliculaForm.get('nombre')?.errors?.required">
+        El nombre es requerido
+      </span>
+      <span *ngIf="peliculaForm.get('nombre')?.errors?.maxlength">
+        El nombre debe tener un máximo de 80 caracteres
+      </span>
+    </span>
+  </div>
+
+  <div class="mb-3 w-50">
+    <label for="genero" class="form-label">Género</label>
+    <select class="form-select" id="genero" formControlName="genero" [ngClass]="validarInput('genero') ? 'is-invalid':''">
+      <option *ngFor="let genero of generos" value={{genero}}>{{genero}}</option>
+    </select>
+
+    <span class="help-block text-danger" *ngIf="validarInput('genero')">
+      <span *ngIf="peliculaForm.get('genero')?.errors?.required">
+        El género es requerido
+      </span>
+    </span>
+  </div>
+
+  <div class="mb-3 w-25">
+    <label for="fechaLanzamiento" class="form-label">Fecha de lanzamiento</label>
+    <input type="date" class="form-control" id="fechaLanzamiento" formControlName="fechaLanzamiento" [ngClass]="validarInput('fechaLanzamiento') ? 'is-invalid':''">
+
+    <span class="help-block text-danger" *ngIf="validarInput('fechaLanzamiento')">
+      <span *ngIf="peliculaForm.get('fechaLanzamiento')?.errors?.required">
+        La fecha de lanzamiento es requerida
+      </span>
+    </span>
+  </div>
+
+  <div class="mb-3 w-25">
+    <label for="calificacion" class="form-label">Calificación</label>
+    <input type="range" class="form-range" list="calificaciones" min="1" max="5" id="calificacion" formControlName="calificacion">
+    <span>{{peliculaForm.controls['calificacion'].value}}</span>
+  </div>
+
+  <div class="mb-3 w-75">
+    <label for="urlPortada" class="form-label">URl de la imagen de portada</label>
+    <input type="text" class="form-control" id="urlPortada" formControlName="urlPortada">
+  </div>
+
+  <div class="mb-3 w-75">
+    <label for="urlTrailer" class="form-label">URl del trailer</label>
+    <input type="text" class="form-control" id="urlTrailer" formControlName="urlTrailer">
+  </div>
+
+  <div class="mb-3">
+    <label for="descripcion" class="form-label">Descripción (max 280 caracteres)</label>
+    <textarea class="form-control" id="descripcion" formControlName="descripcion" [ngClass]="validarInput('descripcion') ? 'is-invalid':''"></textarea>
+
+    <span class="help-block text-danger" *ngIf="validarInput('descripcion')">
+      <span *ngIf="peliculaForm.get('descripcion')?.errors?.maxlength">
+        La descripción no puede superar los 280 caracteres
+      </span>
+    </span>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Dar de alta</button>
+</form>
